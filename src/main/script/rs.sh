@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # User defines RS_PATH to be ":"-separated list of directories to search, in order.
 # If RS_PATH is empty, it is assumed to be "."
