@@ -16,8 +16,17 @@ wrapper and the name of the script to run with its options.
 
 # Install
 
+If you have `make`, do this:
+
 ```
 make install
+```
+
+If you don't have `make`, do this instead:
+
+```
+cp src/main/script/rs.sh /usr/bin/rs
+chmod 755 /usr/bin/rs
 ```
 
 You can create your own script directory and initialize your terminal with `RS_PATH`
