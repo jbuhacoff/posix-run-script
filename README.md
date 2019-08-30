@@ -14,7 +14,16 @@ define the location of scripts in an environment variable. This also allows proc
 to be shared which are copy-paste-executable by referring to a command line with this 
 wrapper and the name of the script to run with its options.  
 
-# Install
+# Quick install
+
+Without cloning the repository, you can just download and install the script:
+
+```
+curl --silent --show-error -o /usr/bin/rs https://raw.githubusercontent.com/jbuhacoff/posix-run-script/master/src/main/script/rs.sh
+chmod 755 /usr/bin/rs
+```
+
+# Install from source
 
 If you have `make`, do this:
 
@@ -28,6 +37,8 @@ If you don't have `make`, do this instead:
 cp src/main/script/rs.sh /usr/bin/rs
 chmod 755 /usr/bin/rs
 ```
+
+# Configure
 
 You can create your own script directory and initialize your terminal with `RS_PATH`
 each time you login:
