@@ -67,6 +67,8 @@ trim() {
 print_help() {
     echo "usage: rs <script> [options...]"
     echo "usage: rs --locate|-l <script>"
+    echo "usage: rs --connect|-c <connection> <script>"
+    echo "usage: RS_CONNECT=<connection> rs --connect-env|-C <script>"
 }
 
 # Main
@@ -81,7 +83,36 @@ rspath_to_array
 case "$1" in
     --locate|-l)
         shift
-        rs_locate_in_path "$1"
+        script_name=$1
+        rs_locate_in_path "$script_name"
+        exit $?
+        ;;
+    --connect|-c)
+        shift
+        connect="$1"
+        shift
+        script_name=$1
+        script_path=$(rs_locate_in_path "$script_name")
+        if [ -z "$script_path" ]; then
+            exit 1
+        fi
+        cat $script_path | $connect bash "<( cat - )" "$@"
+        exit $?
+        ;;
+    --connect-env|-C)
+        shift
+        connect="$RS_CONNECT"
+        if [ -z "$RS_CONNECT" ]; then
+            to_stderr echo "error: undefined environment variable RS_CONNECT"
+            to_stderr echo "usage: RS_CONNECT=<connection> rs --connect-env|-C <script>"
+            exit 1
+        fi
+        script_name=$1
+        script_path=$(rs_locate_in_path "$script_name")
+        if [ -z "$script_path" ]; then
+            exit 1
+        fi
+        cat $script_path | $connect bash "<( cat - )" "$@"
         exit $?
         ;;
 esac
