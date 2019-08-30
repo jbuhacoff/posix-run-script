@@ -96,3 +96,27 @@ rs -l <script>
 It will print out the path wherever `<script>` is found and exit 0, or it will print
 an error message to stderr and exit with a non-zero status. 
 
+# Execute remotely
+
+You can execte a script on a remote server using the `--connect` or `--connect-env`
+options. The `--connect` option requires a parameter that specifies how to connect
+to the remote server, for example `ssh user@host`. The `--connect-env` option looks
+for an environment variable `RS_CONNECT` to find the same information so you can define
+it once instead of on each command.
+
+For the following examples to work, the script must be found in the local
+`RS_PATH` and you must have SSH access to the remote server:
+
+```
+rs --connect 'ssh user@host' script/to/run
+rs -c 'ssh user@host' script/to/run
+```
+
+```
+export RS_CONNECT='ssh user@host'
+rs --connect-env script/to/run
+rs -C script/to/run
+```
+
+The script is piped to the remote system using the specified connect command and
+executed on the remote system.
